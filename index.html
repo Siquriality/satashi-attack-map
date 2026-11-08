@@ -1,0 +1,102 @@
+<!doctype html>
+<!-- Содержит разметку страницы карты сетевых событий. -->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Satashi Signal Map</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar" aria-label="Satashi network status">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <span>Satashi Signal Map</span>
+        </div>
+        <div class="stats" aria-label="Live counters">
+          <span><strong>50</strong> EU nodes</span>
+          <span><strong>America</strong> signal zone</span>
+          <span><strong>Live</strong> visual</span>
+        </div>
+      </header>
+
+      <section class="map-stage" aria-label="Animated world signal map">
+        <canvas id="codeRain" class="code-rain" aria-hidden="true"></canvas>
+
+        <svg
+          id="worldMap"
+          class="map-svg"
+          viewBox="0 0 1440 760"
+          role="img"
+          aria-label="World map with Satashi nodes in Europe and animated signal lines to America"
+        >
+          <defs>
+            <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="4" result="blur">
+              </feGaussianBlur>
+              <feMerge>
+                <feMergeNode in="blur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+            <filter id="hotGlow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="7" result="blur"></feGaussianBlur>
+              <feColorMatrix
+                in="blur"
+                type="matrix"
+                values="1 0 0 0 0.25  0 1 0 0 0.95  0 0 1 0 0.45  0 0 0 1 0"
+                result="greenBlur"
+              ></feColorMatrix>
+              <feMerge>
+                <feMergeNode in="greenBlur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+            <linearGradient id="oceanGradient" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#06110d"></stop>
+              <stop offset="42%" stop-color="#071612"></stop>
+              <stop offset="100%" stop-color="#120b13"></stop>
+            </linearGradient>
+            <radialGradient id="impactGradient" cx="50%" cy="50%" r="55%">
+              <stop offset="0%" stop-color="#ffef8a" stop-opacity="0.9"></stop>
+              <stop offset="45%" stop-color="#40ff9d" stop-opacity="0.35"></stop>
+              <stop offset="100%" stop-color="#40ff9d" stop-opacity="0"></stop>
+            </radialGradient>
+          </defs>
+
+          <rect class="ocean" width="1440" height="760"></rect>
+          <g id="gridLayer" class="grid-layer"></g>
+          <g id="landLayer" class="land-layer"></g>
+          <g id="routeLayer" class="route-layer"></g>
+          <g id="targetLayer" class="target-layer"></g>
+          <g id="nodeLayer" class="node-layer"></g>
+          <g id="labelLayer" class="label-layer"></g>
+        </svg>
+
+        <div class="hud hud-left" aria-hidden="true">
+          <span class="hud-label">TRACE</span>
+          <span class="hud-value">EUROPE / AMERICA</span>
+        </div>
+        <div class="hud hud-right" aria-hidden="true">
+          <span class="hud-label">SATASHI</span>
+          <span class="hud-value">50 STREAMS</span>
+        </div>
+        <div class="cinema-title" aria-hidden="true">
+          <span class="cinema-kicker">BLACK SIGNAL</span>
+          <span class="cinema-main">SATASHI VISUAL</span>
+          <span class="cinema-sub">CINEMATIC MODE</span>
+        </div>
+        <div class="signal-strip" aria-hidden="true">
+          <span>SYNC GRID</span>
+          <span>NO REAL DATA</span>
+          <span id="signalClock">00:00:00</span>
+          <span>VISUAL ONLY</span>
+          <span id="signalPulse">SIGNAL 00</span>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
